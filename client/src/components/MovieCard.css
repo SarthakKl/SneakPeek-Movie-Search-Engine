@@ -1,0 +1,52 @@
+.movie_card{
+    margin: 20px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+.poster{
+    width: 250px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+/* shadow div */
+.shadow-div{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.movie-title{
+    position: absolute;
+    font-weight: 700;
+    color: white;
+    font-size: 16px;
+    display: none;
+    /* visibility: none; */
+}
+
+/* .img-card:hover{
+    filter: brightness(70%);
+} */
+
+.shadow-div:hover{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.5);
+
+}
+.shadow-div:hover .movie-title{
+    display: block;
+}

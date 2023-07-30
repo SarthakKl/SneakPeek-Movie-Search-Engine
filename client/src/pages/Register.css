@@ -1,0 +1,49 @@
+.registerContainer{
+    height: 89vh;
+    display: flex;
+    justify-content: center;
+    align-items: center ;
+    flex-direction: column;
+    font-family: Poppins;
+    position:relative
+}
+.login-heading{
+    font-size: 20px;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+}
+.nameForm{
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2),
+                 0 6px 6px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0px;
+    width:300px;
+    background-color: rgb(243, 243, 243);
+    border-radius: 12px;
+}
+
+.nameForm input{
+    padding: 10px;
+    border-radius: 4px;
+    outline-style: hidden;
+    border: none;
+}
+.form-footer{
+    font-size:14px;
+    text-align: center;
+    margin-top:8px;
+    font-weight: bold;
+}
+.form-footer span{
+    
+    color:rgb(59, 59, 255);
+    cursor: pointer;
+}
+.form-footer span:hover{
+    color:blue;
+}
+

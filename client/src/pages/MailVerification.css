@@ -1,0 +1,20 @@
+.verification-container{
+    height:89vh;
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: Poppins;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.resend-input{
+    width:300px;
+}
+.resend-form .btn{
+    margin-left:10px;
+}

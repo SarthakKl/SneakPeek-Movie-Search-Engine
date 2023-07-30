@@ -1,0 +1,29 @@
+.verification-msg-container{
+    background-color: rgba(248, 248, 248, 0.815); /* Blue color, change to your preferred color */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-size: 18px;
+    max-width: 600px;
+}
+.verification-title{
+    font-weight: bold;
+    font-size:20px;
+    padding:10px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.637);
+}
+.verification-body{
+    padding:10px;
+    margin:0px;
+}
+.resend-btn{
+    color:blue;
+    text-decoration: underline;
+    cursor:pointer;
+}
+.resend-btn:hover{
+    color:rgb(0, 0, 129)
+}
+.resend-btn:visited{
+    color:blueviolet
+}

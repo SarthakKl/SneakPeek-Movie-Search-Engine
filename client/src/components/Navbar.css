@@ -1,0 +1,54 @@
+.nav{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    align-items: center;
+    font-family: fira code;
+    font-weight: 700;
+    background-color: #404258;
+   
+}
+.site-title{
+    color: white;
+    margin: 0px 0px 0px 30px;
+    cursor: pointer;
+}
+.search-and-user{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.search-box-container{
+    background: white;
+    border: 2px solid rgb(238, 237, 237);
+    border-radius: 5px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+.account{
+    margin:0px 20px 0px 20px;
+    border: none;
+    font-size: 24px;
+}
+.search-input{
+    /* padding: 10px 20px; */
+    border: none;
+    outline: none;
+    padding: 0px 10px;
+    /* font-family: fira Code; */
+    font-family: sans-serif;
+    flex: 1;
+}
+.search-button{
+    border: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 10px 10px 10px 10px;
+}
+.loginLink{
+    color: black;
+    text-decoration: none;
+}
