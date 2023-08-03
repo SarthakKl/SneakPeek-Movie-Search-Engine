@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { FaSpinner } from 'react-icons/fa'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
-import { resendVerificationMail, verifyEmail } from '../utils/backend_api'
+import { resendVerificationMail, verifyEmail } from '../utils/api/authApi'
 import './MailVerification.css'
 import Button from 'react-bootstrap/esm/Button'
-import MailVerificationMsg from '../components/MailVerificationMsg'
+import MailVerificationMsg from '../components/register/MailVerificationMsg'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {userAxios} from '../utils/api/userApi'
 
 function MailVerification({setError, setUser}) {
     const {token} = useParams()
@@ -35,6 +36,7 @@ function MailVerification({setError, setUser}) {
             return setLinkExpiredState(true)
         localStorage.setItem('USER_TOKEN', response.token)
         localStorage.setItem('USERNAME', response.user.username)
+        userAxios.defaults.headers.common['token'] = response.token
         setUser(response.user)
         navigate('/', {replace:true})
     }   
@@ -55,7 +57,7 @@ function MailVerification({setError, setUser}) {
     }
     useEffect(()=>{
         emailVerification()
-    },[])
+    })
   return (
     <div className='verification-container'>
         {
@@ -66,7 +68,7 @@ function MailVerification({setError, setUser}) {
             !isLinkExpired && !verificationState &&
             <div className='content'>
                 <h3>Verifying your mail...</h3>
-                <FaSpinner/>
+                <FaSpinner className="spinner"/>
             </div>
         }
         {

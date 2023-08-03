@@ -1,14 +1,15 @@
 import {Link, useNavigate} from 'react-router-dom'
 import {useState, useEffect, useContext, React} from 'react'
 
-import {fetchMovieByName} from '../utils/tmdbApi'
+import {fetchMovieByName} from '../../utils/api/tmdbApi'
 import {FaUserAlt} from 'react-icons/fa'
 import Dropdown from 'react-bootstrap/Dropdown';
-import MovieListModal from './MovieListModal'
+import MovieListModal from '../modals/MovieListModal'
 import './Navbar.css'
-import { UserContext } from '../App';
+import { UserContext } from '../../App';
+import {userAxios} from '../../utils/api/userApi'
 
-const Navbar = ({setUser,setMovies})=>{
+const Navbar = ({setUser,setMovies, isSticky})=>{
 
     const navigate = useNavigate();
     const [modalShow,setModalShow] = useState(false);
@@ -26,16 +27,17 @@ const Navbar = ({setUser,setMovies})=>{
     },[user])
    
     const openProfile = ()=>{
-        navigate(`/user/:${user.username}`)
+        navigate(`/user/${user.username}`)
     }
     
     const logoutHandler = ()=>{
         localStorage.clear();
+        userAxios.defaults.headers.common['token'] = ''
         navigate('/'); 
         setUser(null)
     }
     return (
-        <nav className='nav'>
+        <nav className={`nav ${isSticky ? 'sticky' : ''}`}>
                 <h1 className='site-title' onClick={()=>navigate('/')}>SneakPeek</h1>
                 <div className='search-and-user'>
                     <div className='search-box-container'>

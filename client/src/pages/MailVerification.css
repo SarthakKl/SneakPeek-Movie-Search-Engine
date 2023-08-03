@@ -1,5 +1,5 @@
 .verification-container{
-    height:89vh;
+    height:100vh;
     width:100%;
     display: flex;
     flex-direction: column;
@@ -17,4 +17,16 @@
 }
 .resend-form .btn{
     margin-left:10px;
+}
+.spinner {
+    animation: spin infinite 0.8s linear;
+    font-size: 30px;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

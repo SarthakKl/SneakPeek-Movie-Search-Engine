@@ -1,6 +1,6 @@
 import{ useEffect,useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { fetchMovieById } from '../utils/tmdbApi';
+import { fetchMovieById } from '../utils/api/tmdbApi';
 import './MovieDetails.css'
 
 function MovieDetails() {

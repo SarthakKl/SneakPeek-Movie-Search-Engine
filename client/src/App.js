@@ -1,25 +1,24 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {useState, useEffect, createContext} from 'react'
-
 import Homepage from "./pages/Homepage";
 import MovieDetails from "./pages/MovieDetails";
 import Register from "./pages/Register"
 import Profile from "./pages/Profile";
-import { getLikedMovies } from './utils/movieInDB'
-import { getApi } from './utils/tmdbApi'
-import Navbar from "./components/Navbar";
+import { getLikedMovies } from './utils/api/userApi'
+import { getApi } from './utils/api/tmdbApi'
+import Navbar from "./components/common/Navbar";
 import MailVerification from "./pages/MailVerification";
-import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
-import warningImg from './assets/warning.png'
 import { ToastContainer } from "react-toastify";
-
+import { validateToken } from "./utils/api/userApi";
+import {userAxios} from './utils/api/userApi'
+import ErrorModal from "./components/modals/ErrorModal";
 
 export const MovieContext = createContext()
 export const UserContext = createContext()
 export const LikedMovieContext = createContext()
-function App() {
 
+function App() {
+	const [isSticky, setIsSticky] = useState(false);
 	const [user,setUser] = useState(null)
 	const [movies,setMovies] = useState([])
 	const [likedMovie,setLikedMovie] = useState([])
@@ -29,62 +28,62 @@ function App() {
         const data = await getApi()
         setMovies(data)
     }
-
+	const tokenValidation = async ()=>{
+		const token = localStorage.getItem('USER_TOKEN'); 
+		console.log(token)
+		userAxios.defaults.headers.common['token']=token
+		const response = await validateToken()
+		if(response.error){
+			return 
+		}
+		setUser(response.user)
+	}
 	useEffect(()=>{
+		const handleScroll = () => {
+			setIsSticky(window.scrollY > 0);
+		};
+		window.addEventListener('scroll', handleScroll);
 		fetchHomeMovies()
-		const user = localStorage.getItem('user');
-		
-		setUser(JSON.parse(user))
+		tokenValidation()
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+		};
 	},[])
   
 	useEffect(()=>{
-		console.log(movies)
-	}, [movies])
-
-	useEffect(()=>{
 		console.log('user_changed',user)
 		if(user){
+			console.log(user)
 			getLikedMovies(setLikedMovie)
-			console.log('userfound')
-			return
+			return 
 		}
-		setLikedMovie([])
 		console.log('user not found')
+		setLikedMovie([])
 	},[user])
+
+	// useEffect(()=>{
+	// 	console.log(movies)
+	// }, [movies])
 
     return (
 		<div className='main-container'>
 			<ToastContainer/>
-			<Modal
-				size="m"
-				aria-labelledby="contained-modal-title-vcenter"
-				centered
-				show={error}
-				scrollable={false}
-			>
-				<Modal.Header>
-					<Modal.Title id="contained-modal-title-vcenter">
-						<img src = {warningImg} className='warning-icon' alt=''/>
-						<span>Error</span>
-					</Modal.Title> 
-				</Modal.Header>
-				<Modal.Body style={{ overflowY: 'auto'}}>
-					{error}
-				</Modal.Body>
-				<Modal.Footer>
-					<Button onClick={()=>setError('')} variant='danger'>Close</Button>
-				</Modal.Footer>
-			</Modal>
+			<ErrorModal error={error} setError={setError}/>
 			<UserContext.Provider value={user}>
 				<MovieContext.Provider value={movies}>
 					<LikedMovieContext.Provider value={likedMovie}>
 						<BrowserRouter>
-							<Navbar setUser={setUser} setMovies={setMovies} setError = {setError}/>
+							<Navbar setUser={setUser} setMovies={setMovies} setError = {setError} isSticky = {isSticky}/>
 							<Routes>
 								<Route path="/" element={<Homepage  setLikedMovie={setLikedMovie} setError = {setError}/>} />
 								<Route path='/register' element={<Register setUser={setUser} setError = {setError}/>}/>
 								<Route path='/movie/:id' element={<MovieDetails setError = {setError}/>}/>
-								<Route path='/user/:username'  element={<Profile setError = {setError}/>}/>
+								<Route 
+									path='/user/:username'  
+									element={user?<Profile setError = {setError} setUser = {setUser}/>
+												  :<Register setUser={setUser} setError = {setError}/>}
+								/>
 								<Route path='/api/mail-verification/:token' element={<MailVerification setError = {setError} setUser={setUser}/>} />
 							</Routes>
 						</BrowserRouter>

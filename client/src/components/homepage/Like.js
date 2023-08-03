@@ -1,7 +1,7 @@
 import {React, useState, useContext,useEffect} from 'react'
 import { FaHeart } from "react-icons/fa";
-import { LikedMovieContext} from '../App';
-import {saveInDb, removeFromDb} from '../utils/movieInDB'
+import { LikedMovieContext} from '../../App';
+import {saveInDb, removeFromDb} from '../../utils/api/userApi'
 
 import './Like.css'
 

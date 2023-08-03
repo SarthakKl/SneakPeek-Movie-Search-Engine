@@ -5,8 +5,16 @@
     align-items: center;
     font-family: fira code;
     font-weight: 700;
-    background-color: #404258;
-   
+    background-color: transparent;
+    position:absolute;
+    z-index:9999999;
+    width: 100%;
+}
+.nav.sticky {
+    position: fixed;
+    top: 0;
+    background-color: gray;
+    /* Add any other styles you want for the navbar when sticky */
 }
 .site-title{
     color: white;

@@ -5,24 +5,6 @@ const uri="http://localhost:5000/api"
 
 const mainAxios = axios.create({baseURL:uri,})
 
-export const changePassword = async (oldPass, newPass) => {
-    try {
-        const response = await mainAxios({
-            url:'/change-password',
-            method:'put',
-            data:{
-                oldPass,newPass
-            }
-
-        })
-        return response.data
-    } catch (error) {
-        console.log(error)
-        return {
-            error:error?.message
-        }
-    }
-}
 export const login = async (email, password) => {
     try {
         const response = await mainAxios({
@@ -80,7 +62,6 @@ export const verifyEmail = async (token) => {
         return {error:error?.message}
     }
 }
-
 export const resendVerificationMail = async (email) => {
     try {
         const response = await mainAxios({
@@ -98,3 +79,4 @@ export const resendVerificationMail = async (email) => {
         return {error:error?.message}
     }
 }
+

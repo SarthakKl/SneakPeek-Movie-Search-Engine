@@ -33,7 +33,7 @@ module.exports = {
           host: "smtp.gmail.com",
           port:587,
           service: "gmail",
-          secure:true,
+          secure:true,  
           auth: {
             type: "OAuth2",
             user: 'sarthakk60@gmail.com',

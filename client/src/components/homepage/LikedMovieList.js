@@ -1,5 +1,5 @@
 import {useContext,React} from 'react'
-import {LikedMovieContext} from '../App'
+import {LikedMovieContext} from '../../App'
 import MovieListCard from './MovieListCard';
 function LikedMovieList() {
 

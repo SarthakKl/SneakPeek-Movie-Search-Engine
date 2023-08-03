@@ -4,10 +4,10 @@ import './Register.css'
 import { useNavigate } from "react-router-dom"
 import { UserContext } from '../App';
 import { useEffect } from 'react';
-import {login as userLogin, signup as userSignup} from '../utils/backend_api'
-import MailVerificationMsg from '../components/MailVerificationMsg';
-import CustomSpinner from '../components/CustomSpinner';
-
+import {login as userLogin, signup as userSignup} from '../utils/api/authApi'
+import MailVerificationMsg from '../components/register/MailVerificationMsg';
+import CustomSpinner from '../components/common/CustomSpinner';
+import {userAxios} from '../utils/api/userApi'
 
 function Register({setUser, setError}) {
     const [userName,setUsername] = useState("");
@@ -34,6 +34,7 @@ function Register({setUser, setError}) {
 				return setVerificationState(true)
 			localStorage.setItem('USER_TOKEN', response.token)
 			localStorage.setItem('USERNAME', response.user.username)
+			userAxios.defaults.headers.common['token'] = response.token
 			setUser(response.user)
 		}
 		else{

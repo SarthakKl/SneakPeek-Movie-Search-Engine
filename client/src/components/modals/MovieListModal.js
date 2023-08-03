@@ -1,12 +1,12 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import React, { useContext } from 'react'
-import { LikedMovieContext,  } from '../App';
+import { LikedMovieContext,  } from '../../App';
 import './MovieListModal.css'
-import {DownloadPdf} from '../utils/DownloadPdf'
+import {DownloadPdf} from '../../utils/DownloadPdf'
 
-import MovieListCard from './MovieListCard';
-import LikedMovieList from './LikedMovieList';
+import MovieListCard from '../homepage/MovieListCard';
+import LikedMovieList from '../homepage/LikedMovieList';
 
 const MovieListModal = (props)=> {
   

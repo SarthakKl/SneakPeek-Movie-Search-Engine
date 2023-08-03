@@ -5,11 +5,32 @@ const User = require('../model/User');
 
 router.use('/', (req, res, next)=>{
     try {
-        if(!req.headers.token)
+        const token = req.headers.token
+        if(!token)
             throw Error('Token not found')
-        const response = jwt.verify(req.headers.token,process.env.JWT_SECRET);
+        const response = jwt.verify(token,process.env.JWT_SECRET);
+        console.log(response)
         req.userId = response._id;
         next()
+    } catch (error) {
+        console.log(error)
+        return res.json({
+            error:error.message
+        })
+    }
+})
+router.get('/',async (req, res)=>{
+    try {
+        const userId = req.userId;
+        
+        const user = await User.findOne({_id:userId})
+        if(!user)
+            throw Error('User not found')
+        return res.json({
+            user,
+            error:null,
+            message:"Token validated"
+        })
     } catch (error) {
         console.log(error)
         return res.json({
@@ -20,7 +41,6 @@ router.use('/', (req, res, next)=>{
 router.put('/change-password',async (req,res)=>{
     try {
         console.log("pasword change clicked")
-
         const user = await User.findOne({_id:req.userId});
         const passCorrect = await User.verifyPass(req.body.oldPass,user.password)
         if(passCorrect){
@@ -48,6 +68,7 @@ router.post('/saveMovie', async(req,res)=>{
             rating:req.body.rating,
             genre:req.body.genre
         }
+        console.log(movie)
         user.likedMovie.push(movie);
         await user.save();
         res.json({
@@ -59,10 +80,7 @@ router.post('/saveMovie', async(req,res)=>{
     } catch (err) {
         console.log(err);
         res.json({
-            status:"Failed",
-            message:"Internal Server Error",
-            data:null,
-            error:error
+            error:"Internal Server Error",
         })
     }
 })
@@ -75,18 +93,17 @@ router.delete('/delMovie', async(req,res)=>{
         const movieIndex = user.likedMovie.findIndex((item)=>item.id===req.body.movieId)
         console.log(user.likedMovie.length);
         
-        await user.likedMovie.splice(movieIndex,1);
+        user.likedMovie.splice(movieIndex,1);
         await user.save();
         console.log(user.likedMovie.length);
         res.json({
-            message:"del",
+            message:"Movie deleted successfully",
             error:null
         })
 
     } catch (error) {
         res.json({
-            message:"Error happend",
-            error:error
+            error:error.message
         })
     }
     
@@ -106,7 +123,6 @@ router.get('/getLikedMovies', async(req,res)=>{
         console.log(error)
         res.json({
             error:"Internal Server Error",
-            data:null,
         })
     }
 })
